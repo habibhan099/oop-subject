@@ -1,0 +1,170 @@
+‎import java.util.Scanner;
+‎
+‎public class App {
+‎    static int balance = 0;
+‎    static App bankOperations = new App();
+‎
+‎    // ---------- ATM Operations ----------
+‎    void deposit(int amount) {
+‎        if (amount > 0) {
+‎            balance += amount;
+‎            System.out.println("Amount Deposited Successfully!");
+‎        } else {
+‎            System.out.println("Invalid deposit amount.");
+‎        }
+‎    }
+‎
+‎    void withdraw(int amount) {
+‎        if (amount > 0 && amount <= balance) {
+‎            balance -= amount;
+‎            System.out.println("Amount Withdrawn Successfully!");
+‎        } else if (amount > balance) {
+‎            System.out.println("Insufficient funds.");
+‎        } else {
+‎            System.out.println("Invalid withdrawal amount.");
+‎        }
+‎    }
+‎
+‎    void checkBalance() {
+‎        System.out.println("Current Balance: ₹" + balance + "/-");
+‎    }
+‎
+‎    void exit() {
+‎        System.out.println("\nThank you for using our ATM service. Goodbye!\n");
+‎    }
+‎
+‎    // ---------- Password Strength Checker ----------
+‎    static void checkPasswordStrength(String password) {
+‎        int length = password.length();
+‎
+‎        boolean hasLetter = password.matches(".[a-zA-Z].");
+‎        boolean hasDigit = password.matches(".[0-9].");
+‎        boolean hasSpecial = password.matches(".[!@#$%^&()_+\\-={}\\[\\]:;\"'<>,.?/].*");
+‎
+‎        if (length < 6) {
+‎            System.out.println("Password Strength: ❌ Too Short");
+‎        } else if (length <= 10) {
+‎            if ((hasLetter && !hasDigit) || (!hasLetter && hasDigit)) {
+‎                System.out.println("Password Strength: Weak");
+‎            } else if (hasLetter && hasDigit) {
+‎                System.out.println("Password Strength: Medium");
+‎            } else {
+‎                System.out.println("Password Strength:  Weak");
+‎            }
+‎        } else {
+‎            if (hasLetter && hasDigit && hasSpecial) {
+‎                System.out.println("Password Strength: Strong");
+‎            } else {
+‎                System.out.println("Password Strength: Medium");
+‎            }
+‎        }
+‎    }
+‎
+‎    // ---------- PIN Validator ----------
+‎    static boolean isValidPIN(String pin) {
+‎        return pin.matches("\\d{4}"); // Exactly 4 digits
+‎    }
+‎
+‎    // ---------- Main Method ----------
+‎    public static void main(String[] args) {
+‎        Scanner input = new Scanner(System.in);
+‎
+‎        // ===== Step 1: Set PIN =====
+‎        String userPIN;
+‎        while (true) {
+‎            System.out.print("Set your 4-digit PIN: ");
+‎            userPIN = input.nextLine();
+‎            if (isValidPIN(userPIN)) {
+‎                System.out.println("PIN set successfully.\n");
+‎                break;
+‎            } else {
+‎                System.out.println("Invalid PIN. It must be exactly 4 digits.\n");
+‎            }
+‎        }
+‎
+‎        // ===== Step 2: Set Password =====
+‎        String userPassword;
+‎        while (true) {
+‎            System.out.print("Set your Password: ");
+‎            userPassword = input.nextLine();
+‎            checkPasswordStrength(userPassword);
+‎            if (userPassword.length() >= 6) {
+‎                System.out.println("Password set successfully.\n");
+‎                break;
+‎            } else {
+‎                System.out.println("Password too short. Try again.\n");
+‎            }
+‎        }
+‎
+‎        // ===== Step 3: Login with PIN or Password =====
+‎        boolean authenticated = false;
+‎        for (int i = 0; i < 3; i++) {
+‎            System.out.print("Login using your PIN or Password: ");
+‎            String loginInput = input.nextLine();
+‎
+‎            if (loginInput.equals(userPIN) || loginInput.equals(userPassword)) {
+‎                System.out.println("Login Successful!\n");
+‎                authenticated = true;
+‎                break;
+‎            } else {
+‎                System.out.println("Incorrect PIN or Password. Try again.");
+‎                if (i == 2) {
+‎                    System.out.println("You entered wrong credentials 3 times. Account locked!");
+‎                    input.close();
+‎                    return;
+‎                }
+‎            }
+‎        }
+‎
+‎        // ===== ATM Operations Menu =====
+‎        if (authenticated) {
+‎            while (true) {
+‎                System.out.println("\n===== ATM Menu =====");
+‎                System.out.println("a) Deposit");
+‎                System.out.println("b) Withdraw");
+‎                System.out.println("c) Check Balance");
+‎                System.out.println("d) Exit");
+‎                System.out.print("Enter your choice: ");
+‎                String choice = input.nextLine().toLowerCase();
+‎
+‎                switch (choice) {
+‎                    case "a":
+‎                        System.out.print("💵 Enter amount to deposit: ");
+‎                        if (input.hasNextInt()) {
+‎                            int depositAmount = input.nextInt();
+‎                            input.nextLine(); // clear newline
+‎                            bankOperations.deposit(depositAmount);
+‎                        } else {
+‎                            System.out.println("Invalid input. Please enter a number.");
+‎                            input.nextLine(); // discard invalid input
+‎                        }
+‎                        break;
+‎
+‎                    case "b":
+‎                        System.out.print("💸 Enter amount to withdraw: ");
+‎                        if (input.hasNextInt()) {
+‎                            int withdrawAmount = input.nextInt();
+‎                            input.nextLine(); // clear newline
+‎                            bankOperations.withdraw(withdrawAmount);
+‎                        } else {
+‎                            System.out.println("Invalid input. Please enter a number.");
+‎                            input.nextLine(); // discard invalid input
+‎                        }
+‎                        break;
+‎
+‎                    case "c":
+‎                        bankOperations.checkBalance();
+‎                        break;
+‎
+‎                    case "d":
+‎                        bankOperations.exit();
+‎                        input.close();
+‎                        return;
+‎
+‎                    default:
+‎                        System.out.println("Invalid choice. Please select a, b, c, or d.");
+‎                }
+‎            }
+‎        }
+‎    }
+‎}
