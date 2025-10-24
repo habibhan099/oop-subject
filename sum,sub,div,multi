@@ -1,0 +1,49 @@
+public class sum {
+    public static void main(String[] args) {
+        System.out.println(3+2);
+        System.out.println();
+        System.out.println(3 + 2);   
+        System.out.println(3 - 2);
+        System.out.println(3 * 2);
+        System.out.println(3 / 2);
+        System.out.println(Math.pow(3,2));
+        System.out.println();
+        
+        Scanner x=new Scanner(System.in);
+        
+
+        System.out.println("Enter 1st number:");
+        int num1 = x.nextInt();
+
+        System.out.println("Enter 2nd number:");
+        int num2 = x.nextInt();
+
+        // Consume leftover newline before reading operator
+        x.nextLine();
+
+        System.out.println("Enter operator:");
+        String operator = x.nextLine();
+
+        // Use .equals() for string comparison, not ==
+        if (operator.equals("+") || operator.equals("sum") || operator.equals("s")) {
+            System.out.println("Result: " + (num1 + num2));
+        } else if (operator.equals("-") || operator.equals("diff") || operator.equals("d")) {
+            System.out.println("Result: " + (num1 - num2));
+        } else if (operator.equals("*") || operator.equals("mul") || operator.equals("m")) {
+            System.out.println("Result: " + (num1 * num2));
+        } else if (operator.equals("/") || operator.equals("div")) {
+            // Avoid division by zero
+            if (num2 != 0) {
+                System.out.println("Result: " + (num1 / num2));
+            } else {
+                System.out.println("Error: Division by zero");
+            }
+        } else {
+            System.out.println("Invalid operator");
+        }
+
+        x.close();
+
+
+    }
+}
