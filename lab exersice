@@ -1,0 +1,259 @@
+QUESTION  
+public class Employee { 
+private int id; // Employee id 
+private String name; // Employee name 
+private int type; // 1 = employee, 2 = manager 
+private double baseSalary; // Base salary 
+// Constructor 
+public Employee(int _id, String _name) { 
+this.id = _id; 
+this.name = _name; 
+this.type = 1; // Default to employee 
+this.baseSalary = 0.0; 
+} 
+// id mutator 
+public void setID(int x) { 
+this.id = x; 
+} 
+// name mutator 
+public void setName(String x) { 
+this.name = x; 
+} 
+// id accessor 
+public int getID() { 
+return this.id; 
+} 
+// name accessor 
+public String getName() { 
+return this.name; 
+} 
+// type mutator 
+public void setType(int t) { 
+this.type = t; 
+} 
+// sets base salary 
+public void setBaseSalary(double bs) { 
+this.baseSalary = bs; 
+} 
+// get salary (if manager, add 10% to base salary) 
+public double getSalary() { 
+if (type == 2) { 
+return baseSalary * 1.10; 
+} else { 
+return baseSalary; 
+} 
+} 
+// Main method to create instances and demonstrate functionality 
+public static void main(String[] args) { 
+Employee emp1 = new Employee(101, "Alice"); 
+emp1.setType(1); // employee 
+emp1.setBaseSalary(50000); 
+Employee emp2 = new Employee(102, "Bob"); 
+emp2.setType(2); // manager 
+emp2.setBaseSalary(70000); 
+System.out.println("Employee 1: " + emp1.getName() + ", ID: " + emp1.getID() + ", Salary: " + 
+emp1.getSalary()); 
+System.out.println("Employee 2: " + emp2.getName() + ", ID: " + emp2.getID() + ", Salary: " + 
+emp2.getSalary()); 
+} 
+} 
+QUESTION  
+import java.util.Date; 
+public class Person { 
+private String name; 
+private int age; 
+private Date dateOfBirth; 
+// No-argument constructor 
+public Person() { 
+this.name = ""; 
+this.age = 0; 
+this.dateOfBirth = new Date(); 
+} 
+// Parameterized constructor 
+public Person(String name, int age, Date dateOfBirth) { 
+this.name = name; 
+this.age = age; 
+this.dateOfBirth = dateOfBirth; 
+} 
+// Getter and Setter for name 
+public String getName() { 
+return name; 
+} 
+public void setName(String name) { 
+this.name = name; 
+} 
+// Getter and Setter for age 
+public int getAge() { 
+return age; 
+} 
+public void setAge(int age) { 
+this.age = age; 
+} 
+// Getter and Setter for dateOfBirth 
+public Date getDateOfBirth() { 
+return dateOfBirth; 
+} 
+public void setDateOfBirth(Date dateOfBirth) { 
+this.dateOfBirth = dateOfBirth; 
+} 
+// Method to display all attributes 
+public void display() { 
+System.out.println("Name: " + name); 
+System.out.println("Age: " + age); 
+System.out.println("Date of Birth: " + dateOfBirth); 
+} 
+// Test program 
+public static void main(String[] args) { 
+Person p1 = new Person("Alice", 22, new Date(102, 4, 15)); // May 15, 2002 
+Person p2 = new Person(); 
+p2.setName("Bob"); 
+p2.setAge(25); 
+p2.setDateOfBirth(new Date(99, 10, 30)); // Nov 30, 1999 
+System.out.println("Person 1:"); 
+p1.display(); 
+System.out.println("\nPerson 2:"); 
+p2.display(); 
+} 
+} 
+QUESTION 
+public class Triangle { 
+private double height; 
+private double base; 
+public Triangle(double h, double b) { 
+this.height = h; 
+this.base = b; 
+} 
+public void setHeight(double x) { 
+this.height = x; 
+} 
+public double getHeight() { 
+return this.height; 
+} 
+public void setBase(double x) { 
+this.base = x; 
+} 
+public double getBase() { 
+return this.base; 
+} 
+public double getArea() { 
+return 0.5 * base * height; 
+} 
+} 
+QUESTION 
+public class Bank { 
+public static void main(String[] args) { 
+BankAccount account = new BankAccount("John Doe", 100.0); 
+account.deposit(50.0); 
+account.withdraw(30.0); 
+account.applyInterest(); 
+System.out.println(account); 
+} 
+} 
+class BankAccount { 
+private String customerName; 
+private double balance; 
+private static final double TRANSACTION_FEE = 2.0; 
+private static final double INTEREST_RATE = 0.03; // 3% annual 
+public BankAccount(String customerName, double initialBalance) { 
+if (initialBalance < 100.0) { 
+      throw new IllegalArgumentException("Initial balance must be at least $100."); 
+    } 
+    this.customerName = customerName; 
+    this.balance = initialBalance; 
+  } 
+ 
+  public void deposit(double amount) { 
+    if (amount <= 0) { 
+      System.out.println("Deposit amount must be positive."); 
+      return; 
+    } 
+    balance += amount; 
+    System.out.println("Deposited $" + amount); 
+  } 
+ 
+  public void withdraw(double amount) { 
+    if (amount + TRANSACTION_FEE > balance) { 
+      System.out.println("Insufficient funds for withdrawal and transaction fee."); 
+      return; 
+    } 
+    balance -= (amount + TRANSACTION_FEE); 
+    System.out.println("Withdrew $" + amount + " (Fee: $" + TRANSACTION_FEE + ")"); 
+  } 
+ 
+  public void applyInterest() { 
+    double interest = balance * INTEREST_RATE; 
+    balance += interest; 
+    System.out.println("Interest applied: $" + String.format("%.2f", interest)); 
+  } 
+ 
+  @Override 
+public String toString() { 
+return "Customer: " + customerName + ", Balance: $" + String.format("%.2f", balance); 
+} 
+} 
+QUESTION 
+import java.util.Scanner; 
+class Date { 
+int day; 
+int month; 
+int year; 
+Date(int day, int month, int year) { 
+this.day = day; 
+this.month = month; 
+this.year = year; 
+} 
+void printDate() { 
+System.out.println("Date: " + day + "/" + month + "/" + year); 
+} 
+} 
+public class Main { 
+public static void main(String[] args) { 
+Scanner scanner = new Scanner(System.in); 
+System.out.print("Enter day: "); 
+int day = scanner.nextInt(); 
+System.out.print("Enter month: "); 
+int month = scanner.nextInt(); 
+System.out.print("Enter year: "); 
+int year = scanner.nextInt(); 
+Date date = new Date(day, month, year); 
+date.printDate(); 
+scanner.close(); 
+} 
+} 
+QUESTION 
+public class Point { 
+private double x; 
+private double y; 
+// No-argument constructor (0,0) 
+public Point() { 
+this.x = 0; 
+this.y = 0; 
+} 
+// Constructor with specified coordinates 
+public Point(double x, double y) { 
+this.x = x; 
+this.y = y; 
+} 
+// Getter for x 
+public double getX() { 
+return x; 
+} 
+// Setter for x 
+public void setX(double x) { 
+this.x = x; 
+} 
+// Getter for y 
+public double getY() { 
+return y; 
+} 
+// Setter for y 
+public void setY(double y) { 
+this.y = y; 
+} 
+// Method to calculate distance to another point (x, y) 
+public double distance(double x, double y) { 
+double dx = this.x - x; 
+double dy = this.y - y; 
+return Math.sqrt(dx * dx + dy * dy); 
+} 
+}
